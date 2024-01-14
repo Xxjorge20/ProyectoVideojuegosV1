@@ -1,34 +1,16 @@
 <?php
-    // formBorrar.php
 
-    include_once('../Modelo/Campeon.php');
-    include_once('../Modelo/CampeonBD.php');
 
-    $nombre = $_POST['nombre'];
+    function borrarCampeon($nombre) :bool {
 
-    $campeon = CampeonBD::getCampeonPorNombre($nombre);
+        include_once('../Modelo/Campeon.php');
+        include_once('../Modelo/CampeonBD.php');
 
-    if ($campeon) {
-        // Si se ha enviado el formulario de confirmación
-        if (isset($_POST['confirmar'])) {
-            CampeonBD::borrarCampeon($nombre);
-            echo '<p>Campeon borrado correctamente.</p>';
-            echo '<a href="../Vista/formBorrar.php">Volver</a>';
-        } else {
-            // Muestra el formulario de confirmación
-            echo '<h1>Confirmar Borrado</h1>';
-            echo '<p>¿Seguro que deseas borrar al campeon ' . $nombre . '?</p>';
-            echo '<form action="" method="post">';
-            echo '<input type="hidden" name="nombre" value="' . $nombre . '">';
-            echo '<input type="submit" name="confirmar" value="Confirmar">';
-            echo '<input type="submit" name="cancelar" value="Cancelar">';
-            echo '</form>';
-        }
-    } else {
-        echo '<p>No existe un campeon con ese nombre.</p>';
+        $campeon = CampeonBD::getCampeonPorNombre($nombre);
+        $nombreCampeonBorrar = $campeon->getNombre();
+
+        $borradoCorrectamente = CampeonBD::borrarCampeon($nombreCampeonBorrar);
+        return $borradoCorrectamente;
     }
-    if (isset($_POST['cancelar'])) {
-        header('Location: formBorrar.php');
-        exit;
-    }
+
 ?>

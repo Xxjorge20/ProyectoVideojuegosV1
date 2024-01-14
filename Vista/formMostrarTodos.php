@@ -15,10 +15,59 @@
         <a href="formMostrarPorRol.php">Mostrar por Rol</a>
     </div>
 
-    <h1>Mostrar Todos</h1>
-    <form action="../Controlador/ControladorMostrarTodos.php" method="POST">
-        <input type="submit" value="Mostrar Todos" >
-    </form>
+    <h1>Gestion Campeon - Mostrar Todos</h1>
+
+    <br>
+    <br>
+
+    <?php
+
+        $campeones = [];
+
+            include_once('../Modelo/Campeon.php');
+            include_once('../Controlador/ControladorMostrarTodos.php');
+            $campeones = mostrarTodos();
+
+        // Comprobar si hay campeones antes de intentar mostrar la tabla
+        if (isset($campeones)) {
+        ?>
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Rol</th>
+                    <th>Dificultad</th>
+                    <th>Descripción</th>
+                </tr>
+                <?php
+                foreach ($campeones as $campeon) {
+                ?>
+                    <tr>
+                        <td><?php echo $campeon->getId(); ?></td>
+                        <td><?php echo $campeon->getNombre(); ?></td>
+                        <td><?php echo $campeon->getRol(); ?></td>
+                        <td><?php echo $campeon->getDificultad(); ?></td>
+                        <td><?php echo $campeon->getDescripcion(); ?></td>
+                    </tr>
+                <?php
+                }
+                ?>
+            </table>
+        <?php
+        } else {
+        ?>
+            <h1>No hay campeones</h1>
+        <?php
+            }
+        ?>
+           
+        <?php
+
+    ?>
+
+
+
+
 
 
 </body>

@@ -23,7 +23,10 @@
             $sql = "INSERT INTO campeon (Nombre, Rol, Dificultad, Descripcion) VALUES (:Nombre, :Rol, :Dificultad, :Descripcion)";
             $sentencia = $conexion->prepare($sql);
 
-            
+            $nombre = $campeon->getNombre();
+            $rol = $campeon->getRol();
+            $dificultad = $campeon->getDificultad();
+            $descripcion = $campeon->getDescripcion();
 
             
             // Asignar los valores a los parámetros
@@ -100,6 +103,7 @@
 
 
         public static function getCampeonPorNombre(String $nombre) :Campeon{
+            
 
             // Establecer conexión con la base de datos
             include_once('../Conexion/Conexion.php');
@@ -131,7 +135,7 @@
          * @return bool Devuelve true si el campeón se modificó correctamente, de lo contrario devuelve false.
          */
 
-        public static function modificarCampeon(String $nombre) :bool{
+        public static function modificarCampeon(Campeon $campeon) :bool{
 
             $modificadoCorrectamente = false;
 
@@ -142,6 +146,12 @@
             // Preparar la consulta
             $sql = "UPDATE campeon SET Nombre = :Nombre, Rol = :Rol, Dificultad = :Dificultad, Descripcion = :Descripcion WHERE Nombre = :Nombre";
             $sentencia = $conexion->prepare($sql);
+
+            $nombre = $campeon->getNombre();
+            $rol = $campeon->getRol();
+            $dificultad = $campeon->getDificultad();
+            $descripcion = $campeon->getDescripcion();
+
 
             // Asignar los valores a los parámetros
             $sentencia->bindParam(':Nombre',$nombre);

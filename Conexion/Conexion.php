@@ -13,7 +13,7 @@
 
                 self::$conexion = new PDO(DSN, USER, PASSWORD);
                 self::$conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                echo "Conectado a la base de datos <br>";
+               // echo "Conectado a la base de datos <br>";
 
             } catch (PDOException $th) {
                 echo "Error al conectar a la base de datos <br>" . $th->getMessage();

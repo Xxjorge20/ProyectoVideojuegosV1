@@ -15,12 +15,53 @@
     </div>
 
 
-    <h1>Formulario Borrar Campeon</h1>
-    <form action="../Controlador/ControladorBorrar.php" method="POST">
+    <h1>Gestion Campeon - Borrar Campeon</h1>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
         <label for="nombre">Nombre</label>
         <input type="text" name="nombre" id="nombre" required>
         <br>
-        <input type="submit" value="Borrar">
+        <input type="submit" value="Borrar" name="borrarCampeon">
     </form>
+
+    <?php
+        if (isset($_POST['borrarCampeon'])) {
+            $nombre = $_POST['nombre'];
+            ?>
+
+            <!-- Formulario de confirmación con HTML -->
+            <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+                <input type="hidden" name="nombre" value="<?php echo $nombre; ?>">
+                <h1>Confirmar Borrado</h1>
+                <p>¿Seguro que deseas borrar al campeon <?php echo $nombre; ?>?</p>
+                <input type="submit" name="confirmarBorrado" value="Confirmar">
+                <input type="submit" name="cancelarBorrado" value="Cancelar">
+            </form>
+
+            <?php
+        } elseif (isset($_POST['confirmarBorrado'])) {
+
+            include_once('../Controlador/ControladorBorrar.php');
+            $nombre = $_POST['nombre'];
+
+            $borradoCorrectamente = borrarCampeon($nombre);
+            if ($borradoCorrectamente) {
+                echo "<br>";
+                echo "<br>";
+                echo "<h1>Campeon borrado correctamente</h1>";
+                $_POST['nombre'] = "";
+            } else {
+                echo "<br>";
+                echo "<br>";
+                echo "<h1>Campeon no borrado correctamente</h1>";
+            }
+        } elseif (isset($_POST['cancelarBorrado'])) {
+
+            echo "<br>";
+            echo "<br>";
+            echo "<h1>Operación de borrado cancelada por el usuario</h1>";
+        }
+    ?>
+
+
 </body>
 </html>

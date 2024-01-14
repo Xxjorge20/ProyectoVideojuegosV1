@@ -15,11 +15,61 @@
         <a href="formMostrarPorRol.php">Mostrar por Rol</a>
     </div>
 
-        <h1>Mostrar por Rol</h1>
-        <form action="../Controlador/ControladorMostrarPorRol.php" method="POST">
-            <label for="Rol">Rol:</label>
-            <input type="text" name="Rol" id="Rol" require>
-            <input type="submit" value="Mostrar por Rol">
-        </form>
+    <br>
+    <br>
+
+    <?php
+
+        $campeones = [];
+
+        if(isset($_POST['mostrarPorRol'])) {
+            $rol = $_POST['Rol'];
+            include_once('../Modelo/Campeon.php');
+            include_once('../Controlador/ControladorMostrarPorRol.php');
+            $campeones = mostrarPorRol($rol);
+        } else {
+            $rol = "";
+        }
+
+        // Comprobar si hay campeones antes de intentar mostrar la tabla
+        if (!empty($campeones) && isset($_POST['mostrarPorRol'])) {
+    ?>
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Rol</th>
+                    <th>Dificultad</th>
+                    <th>Descripción</th>
+                </tr>
+                <?php
+                foreach ($campeones as $campeon) {
+                ?>
+                    <tr>
+                        <td><?php echo $campeon->getId(); ?></td>
+                        <td><?php echo $campeon->getNombre(); ?></td>
+                        <td><?php echo $campeon->getRol(); ?></td>
+                        <td><?php echo $campeon->getDificultad(); ?></td>
+                        <td><?php echo $campeon->getDescripcion(); ?></td>
+                    </tr>
+                <?php
+                }
+                ?>
+        </table>
+    <?php
+    } else {
+        if (isset($_POST['mostrarPorRol'])) {
+            echo '<p>No hay campeones disponibles para el rol especificado.</p>';
+        }
+    }
+    ?>
+
+    <h1>Mostrar los campeones por Rol</h1>
+    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+        <label for="Rol">Rol:</label>
+        <input type="text" name="Rol" id="Rol" required>
+        <input type="submit" value="Mostrar por Rol" name="mostrarPorRol">
+    </form>
+
 </body>
 </html>
