@@ -13,4 +13,13 @@
         return $borradoCorrectamente;
     }
 
+
+    
+    function obtenerNombres() : array{
+            
+        include_once('../Modelo/Campeon.php');
+        include_once('../Modelo/CampeonBD.php');
+        $nombres = CampeonBD::getNombresCampeones();
+        return $nombres;
+}
 ?>

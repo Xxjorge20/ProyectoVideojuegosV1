@@ -12,4 +12,14 @@
     }
 
 
+    function obtenerRoles() : array {
+
+        include_once('../Modelo/Campeon.php');
+        include_once('../Modelo/CampeonBD.php');
+    
+        
+        $roles = CampeonBD::getRoles();
+        return $roles;
+    }
+
 ?>

@@ -1,5 +1,6 @@
 <?php
 
+    
     function obtenerCampeonModificar(String $nombre) : Campeon{
         
         include_once('../Modelo/Campeon.php');
@@ -28,4 +29,12 @@
         return $modificadoCorrectamente;
     }
 
+
+    function obtenerNombres() : array{
+            
+            include_once('../Modelo/Campeon.php');
+            include_once('../Modelo/CampeonBD.php');
+            $nombres = CampeonBD::getNombresCampeones();
+            return $nombres;
+    }
 ?>

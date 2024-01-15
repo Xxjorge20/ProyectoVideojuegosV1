@@ -25,11 +25,28 @@
         </div>
     </div>
 
+    <?php
+        include_once('../Modelo/Campeon.php');
+        include_once('../Controlador/ControladorBorrar.php');
+        $nombres = obtenerNombres();
+    ?>
+
     <div id = "form">
         <h1>Gestion Campeon - Borrar Campeon</h1>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <label for="nombre">Nombre</label>
-            <input type="text" name="nombre" id="nombre" required>
+            <select name="nombre" id="nombre">
+                <?php
+                    foreach ($nombres as $nombre => $valor) {
+                        if (is_array($valor)) {
+                            // Si $valor es un array, puedes manejarlo de la manera que prefieras, por ejemplo, puedes convertirlo a una cadena
+                            $valor = implode(', ', $valor);
+                        }
+                       // echo $rol . " " . $valor . "<br>";
+                        echo '<option value="' . $valor . '">' . $valor . '</option>';
+                    }
+                ?>
+            </select>
             <br>
             <input type="submit" value="Borrar" name="borrarCampeon">
         </form>

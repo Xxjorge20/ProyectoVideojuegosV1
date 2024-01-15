@@ -25,11 +25,30 @@
         </div>
     </div>
 
+    <?php
+        include_once('../Modelo/Campeon.php');
+        include_once('../Controlador/ControladorModificar.php');
+        $nombres = obtenerNombres();
+    ?>
+
     <div id = "form">
         <h1>Gestion Campeon - Modificar Campeon</h1>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre" required>
+            <select name="nombre" id="nombre">
+                <?php
+                    foreach ($nombres as $nombre => $valor) {
+                        if (is_array($valor)) {
+                            // Si $valor es un array, puedes manejarlo de la manera que prefieras, por ejemplo, puedes convertirlo a una cadena
+                            $valor = implode(', ', $valor);
+                        }
+                       // echo $rol . " " . $valor . "<br>";
+                        echo '<option value="' . $valor . '">' . $valor . '</option>';
+                    }
+                ?>
+            </select>
+            <br>
+            <br>
             <input type="submit" value="Buscar campeon" name="modificarCampeon">
         </form>
     </div>
@@ -66,7 +85,6 @@
         if (isset($_POST['modificarCampeonOriginal'])) {
             include_once('../Controlador/ControladorModificar.php');
             include_once('../Modelo/Campeon.php');
-            echo "<h1>Campeon modificado</h1>";
             $mostrarFormulario = false;
 
             $nombre = $_POST['nombreModificado'];

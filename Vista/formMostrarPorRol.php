@@ -25,12 +25,33 @@
         </div>
     </div>
 
+    <?php
+        include_once('../Modelo/Campeon.php');
+        include_once('../Controlador/ControladorMostrarPorRol.php');
+        $roles = obtenerRoles();
+
+    ?>
 
     <div id = "form">
         <h1>Mostrar los campeones por Rol</h1>
         <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
             <label for="Rol">Rol:</label>
-            <input type="text" name="Rol" id="Rol" required>
+            <select name="Rol" id="Rol">
+                <?php
+                    foreach ($roles as $rol => $valor) {
+                        if (is_array($valor)) {
+                            // Si $valor es un array, puedes manejarlo de la manera que prefieras, por ejemplo, puedes convertirlo a una cadena
+                            $valor = implode(', ', $valor);
+                        }
+                       // echo $rol . " " . $valor . "<br>";
+                        echo '<option value="' . $valor . '">' . $valor . '</option>';
+                    }
+                ?>
+            </select>
+            <br>
+            <br>
+            <br>
+            <br>
             <input type="submit" value="Mostrar por Rol" name="mostrarPorRol">
         </form>
     </div>
@@ -74,10 +95,6 @@
                         ?>
                 </table>
             <?php
-            } else {
-                if (isset($_POST['mostrarPorRol'])) {
-                    echo '<p>No hay campeones disponibles para el rol especificado.</p>';
-                }
             }
         ?>
     </div>
