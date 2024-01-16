@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mostrar Todos</title>
+    <title>Formulario Borrar Campeon</title>
     <link rel="stylesheet" href="../Estilos/style.css">
     <link rel="icon" type="image/jpg" href="../Estilos/Logo.jpg">
 </head>
@@ -16,68 +16,48 @@
 
         <div id = "menu">
             <ul>
-                <li><a href="formInserta.php">Insertar Campeon</a></li>
-                <li><a href="formMostrarTodos.php">Consultar Campeon</a></li>
-                <li><a href="formMostrarPorRol.php">Consultar por Rol</a></li>
-                <li><a href="formModificar.php">Modificar Campeon</a></li>
-                <li><a href="formBorrar.php">Eliminar Campeon</a></li>
-                <li><a href="formLogin.php">Cerrar Sesion</a></li>
+                <li><a href="formRegistro.php">Registrar Usuario</a></li>
+                <li><a href="formLogin.php">Iniciar Sesion</a></li>
             </ul>
         </div>
     </div>
 
+
+
     <div id = "form">
-        <h1>Gestion Campeon - Mostrar Todos</h1>
+        <h1>Gestion Usuario - Iniciar Sesion</h1>
+        <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
+            <label for="usuario">Usuario</label>
+            <input type="usuario" name="usuario" id="usuario" required>
+            <br>
+            <label for="password">Contraseña</label>
+            <input type="password" name="password" id="password" required>
+            <br>
+            <input type="submit" value="Logear" name="logearUsuario">
+        </form>
+    </div>
+
+    <div id="respuesta">
         <?php
+            include_once('../Modelo/Usuario.php');
+            include_once('../Controlador/ControladorLoginUsuario.php');
 
-            $campeones = [];
+            if(isset($_POST['logearUsuario'])){
 
-                include_once('../Modelo/Campeon.php');
-                include_once('../Controlador/ControladorMostrarTodos.php');
-                $campeones = mostrarTodos();
-
-            // Comprobar si hay campeones antes de intentar mostrar la tabla
-            if (isset($campeones)) {
-            ?>
-                <table border="1">
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Rol</th>
-                        <th>Dificultad</th>
-                        <th>Descripción</th>
-                    </tr>
-                    <?php
-                    foreach ($campeones as $campeon) {
-                    ?>
-                        <tr>
-                            <td><?php echo $campeon->getId(); ?></td>
-                            <td><?php echo $campeon->getNombre(); ?></td>
-                            <td><?php echo $campeon->getRol(); ?></td>
-                            <td><?php echo $campeon->getDificultad(); ?></td>
-                            <td><?php echo $campeon->getDescripcion(); ?></td>
-                        </tr>
-                    <?php
-                    }
-                    ?>
-                </table>
-            <?php
-            } else {
-            ?>
-                <h1>No hay campeones</h1>
-            <?php
+                $escorrecto = loginUsuario();
+                if($escorrecto){
+                    // Informamos al usuario de que se ha registrado correctamente
+                    echo "<script>alert('Usuario logeado correctamente');</script>";
+                    // Redirigimos al usuario a la página de login
+                    echo "<script>window.location.href='../Vista/formMostrarTodos.php';</script>";                 
+                }else{
+                    echo "<h1>Usuario no Logeado Correctamente</h1>";
                 }
-            ?>
-            
-            <?php
-
+            }
         ?>
     </div>
 
-
-
-    
-<footer class="pie">
+    <footer class="pie">
         <!-- Sección "Dónde estamos" -->
         <div class="footer-section">
             <h4>Dónde estamos</h4>
@@ -117,8 +97,6 @@
             </p>
         </div>
     </footer>
-
-
 
 </body>
 </html>

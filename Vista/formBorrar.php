@@ -21,6 +21,7 @@
                 <li><a href="formMostrarPorRol.php">Consultar por Rol</a></li>
                 <li><a href="formModificar.php">Modificar Campeon</a></li>
                 <li><a href="formBorrar.php">Eliminar Campeon</a></li>
+                <li><a href="formLogin.php">Cerrar Sesion</a></li>
             </ul>
         </div>
     </div>
